@@ -13,6 +13,7 @@
             --text: #222222;
             --card-bg: #ffffff;
             --border: #e0dacb;
+            --fire: #e65100;
         }
 
         * {
@@ -32,73 +33,100 @@
         header {
             background-color: var(--primary);
             color: white;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             border-bottom: 5px solid var(--accent);
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             letter-spacing: 2px;
             text-transform: uppercase;
+            margin-bottom: 5px;
         }
 
         header p {
             color: var(--accent);
             font-style: italic;
+            font-size: 1.1rem;
         }
 
         .hero {
-            background: linear-gradient(rgba(27, 58, 43, 0.85), rgba(27, 58, 43, 0.95));
+            background: linear-gradient(rgba(27, 58, 43, 0.88), rgba(27, 58, 43, 0.96));
             color: white;
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             border-bottom: 4px dashed var(--accent);
         }
 
         .badge-nasa {
             background-color: black;
             color: white;
-            padding: 5px 15px;
+            padding: 5px 18px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 15px;
             border: 1px solid var(--accent);
             letter-spacing: 3px;
+            font-size: 0.9rem;
         }
 
         .hero h2 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             color: var(--accent);
             margin-bottom: 10px;
             text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
+        /* Основна сітка */
+        .main-layout {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 25px 0;
+            margin-left: -25px;
+            margin-right: -25px;
         }
 
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .hero h2 { font-size: 2rem; }
+        .column-main {
+            display: table-cell;
+            width: 65%;
+            vertical-align: top;
+        }
+
+        .column-sidebar {
+            display: table-cell;
+            width: 35%;
+            vertical-align: top;
+        }
+
+        @media (max-width: 850px) {
+            .main-layout, .column-main, .column-sidebar {
+                display: block;
+                width: 100%;
+            }
+            .column-sidebar {
+                margin-top: 30px;
+            }
         }
 
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--primary);
             margin-bottom: 20px;
             border-left: 5px solid var(--accent);
-            padding-left: 10px;
+            padding-left: 12px;
             text-transform: uppercase;
+            font-weight: bold;
         }
 
         .card {
@@ -107,21 +135,86 @@
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
-        /* Стилі для офіційної афіші */
-        .poster-container {
+        /* Вогняний анонс */
+        .announcement-card {
+            border: 2px solid var(--accent);
+            background: #fffdf0;
             text-align: center;
-            margin-bottom: 25px;
+        }
+
+        .announcement-title {
+            color: var(--fire);
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .announcement-text {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .announcement-highlight {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 8px;
+            border-top: 1px dashed var(--accent);
+            display: inline-block;
+        }
+
+        /* Медіа-блок (Афіша + Відео) */
+        .media-block {
+            display: table;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .media-cell {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .media-cell {
+                display: block;
+                width: 100%;
+                padding: 10px 0;
+            }
         }
 
         .poster-image {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            border: 4px solid var(--accent);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border: 3px solid var(--accent);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .preview-video {
+            width: 100%;
+            max-height: 420px;
+            border-radius: 8px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            background-color: #000;
+        }
+
+        .media-caption {
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 8px;
+            color: #555;
+            font-weight: 500;
         }
 
         .program-list { list-style: none; }
@@ -130,6 +223,7 @@
             border-bottom: 1px solid #f0ede5;
             display: flex;
             align-items: center;
+            font-size: 1.05rem;
         }
         .program-list li::before {
             content: "🪗";
@@ -137,6 +231,7 @@
             font-size: 1.3rem;
         }
 
+        /* Тарифи */
         .ticket-option {
             border: 2px solid var(--border);
             border-radius: 8px;
@@ -146,6 +241,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.2s;
+        }
+
+        .ticket-option:hover {
+            border-color: var(--accent);
         }
 
         .ticket-option.selected {
@@ -156,25 +256,27 @@
         .ticket-option input[type="radio"] {
             margin-right: 15px;
             accent-color: var(--primary);
+            transform: scale(1.2);
         }
 
         .ticket-details { flex-grow: 1; }
         .ticket-title { font-weight: bold; font-size: 1.2rem; color: var(--primary); }
-        .ticket-desc { font-size: 0.9rem; color: #666; }
-        .ticket-price { font-weight: bold; font-size: 1.3rem; color: #2e7d32; }
+        .ticket-desc { font-size: 0.9rem; color: #666; margin-top: 2px; }
+        .ticket-price { font-weight: bold; font-size: 1.3rem; color: #2e7d32; padding-left: 10px; }
 
         .addon-option {
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             cursor: pointer;
+            border-bottom: 1px dashed #eee;
         }
-        .addon-option input { margin-right: 12px; accent-color: var(--primary); }
-        .addon-price { margin-left: auto; font-weight: 500; }
+        .addon-option input { margin-right: 12px; accent-color: var(--primary); transform: scale(1.2); }
+        .addon-price { margin-left: auto; font-weight: bold; color: #444; }
 
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
 
         .total-box {
             background-color: var(--primary);
@@ -184,26 +286,40 @@
             text-align: center;
             margin-top: 20px;
         }
-        .total-price { font-size: 2rem; font-weight: bold; color: var(--accent); margin: 10px 0; }
+        .total-price { font-size: 2.2rem; font-weight: bold; color: var(--accent); margin: 5px 0; }
 
         .btn-buy {
             background-color: var(--accent);
             color: #000;
             border: none;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             font-size: 1.3rem;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(244, 196, 48, 0.3);
+            transition: background 0.2s;
+        }
+        .btn-buy:hover { background-color: var(--accent-dark); }
+
+        .guarantee-badge {
+            background: #fff9e6;
+            border: 2px solid var(--accent);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
         /* Модалка успіху */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             display: none;
             justify-content: center;
             align-items: center;
@@ -228,7 +344,7 @@
         }
         .close-btn {
             background: var(--primary); color: white; border: none;
-            padding: 10px 20px; border-radius: 6px; cursor: pointer;
+            padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold;
         }
     </style>
 </head>
@@ -240,37 +356,63 @@
     </header>
 
     <div class="hero">
-        <div class="badge-nasa">NASA</div>
+        <div class="badge-nasa">NASA APPROVED</div>
         <h2>НАЗІК НА БУКОВИНІ</h2>
-        <p>Субота, 19:00 • Секретна галявина в Карпатах</p>
+        <p style="font-size: 1.3rem; color: #fffbe6; font-weight: bold;">Субота, 19:00 • Секретна галявина в Карпатах</p>
     </div>
 
     <div class="container">
-        <div class="grid">
-            <div>
-                <!-- Блок з офіційною афішою події -->
-                <div class="poster-container">
-                    <img src="12590.jpg" alt="Офіційна афіша події Назік на Буковині" class="poster-image">
+        <!-- Текст палкого анонсу -->
+        <div class="card announcement-card">
+            <h3 class="announcement-title">🔥 Чернівці, ви готові?!</h3>
+            <p class="announcement-text">Вже зовсім скоро — найгарячіша подія цього літа! 🎤</p>
+            <p class="announcement-text" style="font-weight: normal; color: #444;">
+                Неймовірна атмосфера, улюблені хіти, шалена енергія та море емоцій. 
+                Готуйте голоси, збирайте друзів і приходьте запалювати разом з нами!
+            </p>
+            <div class="announcement-highlight">«НАЗІК на Буковині» — концерт, який неможливо пропустити!</div>
+        </div>
+
+        <div class="main-layout">
+            <!-- ЛІВА КОЛОНКА (Медіа, Програма, Тарифи) -->
+            <div class="column-main">
+                
+                <!-- Блок Медіа-прев'ю (Афіша + Відео поруч) -->
+                <div class="card" style="padding: 15px;">
+                    <h3 class="section-title" style="margin-left: 10px; margin-top: 10px;">Офіційне медіа-прев'ю події</h3>
+                    <div class="media-block">
+                        <div class="media-cell">
+                            <img src="12590.jpg" alt="Офіційна афіша концерту" class="poster-image">
+                            <p class="media-caption">📜 Офіційна афіша туру</p>
+                        </div>
+                        <div class="media-cell">
+                            <video class="preview-video" controls poster="12590.jpg">
+                                <source src="0-02-05-55605e7611416faba7443e3bee981c713ef2ce166c6a724d0e92595c9116731b_acc407e85b6f5779.mp4" type="video/mp4">
+                                Ваш браузер не підтримує відео-прев'ю.
+                            </video>
+                            <p class="media-caption">🎬 Ексклюзив: Назік тренує "місячне люстерце" перед виступом</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card">
                     <h3 class="section-title">У програмі вечора</h3>
                     <ul class="program-list">
-                        <li><strong>Улюблені хіти:</strong> Співаємо всім селом до хрипоти.</li>
-                        <li><strong>Нові пісні:</strong> Презентація треків під впливом космосу та кепки NASA.</li>
-                        <li><strong>Танці до упаду:</strong> Організатори не несуть відповідальності за рельєф трави.</li>
-                        <li><strong>Гумор та настрій:</strong> 100% буковинський вайб.</li>
+                        <li><strong>Улюблені хіти:</strong> Співаємо всім селом до хрипоти («Місяць і люстерце» та ін.).</li>
+                        <li><strong>Нові пісні:</strong> Презентація треків, написаних під егідою NASA.</li>
+                        <li><strong>Танці до упаду:</strong> Організатори не несуть відповідальності за рельєф карпатської трави.</li>
+                        <li><strong>Гумор та настрій:</strong> 100% оригінальний буковинський вайб.</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h3 class="section-title">Крок 1: Виберіть тариф</h3>
+                    <h3 class="section-title">Крок 1: Виберіть свій тариф</h3>
                     
                     <div class="ticket-option selected" onclick="selectTicket(this, 'Економ-Полонина', 0)">
                         <input type="radio" name="ticket" id="t1" checked>
                         <div class="ticket-details">
                             <label for="t1" class="ticket-title">Економ-Полонина</label>
-                            <p class="ticket-desc">Вхід на галявину, екологічне повітря, постояти за смерекою.</p>
+                            <p class="ticket-desc">Вхід на галявину, чисте повітря, постояти за смерекою.</p>
                         </div>
                         <div class="ticket-price">0 грн*</div>
                     </div>
@@ -279,7 +421,7 @@
                         <input type="radio" name="ticket" id="t2">
                         <div class="ticket-details">
                             <label for="t2" class="ticket-title">Стандарт-Баян</label>
-                            <p class="ticket-desc">Місце на дерев'яній лавці, дозвіл підспівувати.</p>
+                            <p class="ticket-desc">Місце на дерев'яній лавці + офіційний дозвіл підспівувати на приспівах.</p>
                         </div>
                         <div class="ticket-price">250 грн</div>
                     </div>
@@ -288,10 +430,11 @@
                         <input type="radio" name="ticket" id="t3">
                         <div class="ticket-details">
                             <label for="t3" class="ticket-title">VIP NASA Premium</label>
-                            <p class="ticket-desc">Право потримати баян та приміряти кепку Назіка на 30 секунд.</p>
+                            <p class="ticket-desc">Доступ до секретного холодильника + право приміряти кепку Назіка на 30 секунд.</p>
                         </div>
                         <div class="ticket-price">9999 грн</div>
                     </div>
+                    <p style="font-size: 0.8rem; color: #777; margin-top: 10px;">* За умови теплого слова або холодного компліменту артисту на вході.</p>
                 </div>
 
                 <div class="card">
@@ -303,22 +446,28 @@
                     </label>
                     <label class="addon-option">
                         <input type="checkbox" class="addon-check" data-price="150" onchange="updateTotal()">
-                        <span>Послуга особистого дзвінка: Назік крикне вам у трубку "Приходь, буде гучно!"</span>
+                        <span>Послуга «Дзвінок розігріву»: Назік особисто крикне вам у слухавку "Буде гучно!"</span>
                         <span class="addon-price">+150 грн</span>
+                    </label>
+                    <label class="addon-option">
+                        <input type="checkbox" class="addon-check" data-price="30" onchange="updateTotal()">
+                        <span>Лід для напоїв (свіжий, з гірських вершин)</span>
+                        <span class="addon-price">+30 грн</span>
                     </label>
                 </div>
             </div>
 
-            <div>
+            <!-- ПРАВА КОЛОНКА (Форма бронювання, Фіксована при скролі) -->
+            <div class="column-sidebar">
                 <div class="card" style="position: sticky; top: 20px;">
-                    <h3 class="section-title">Крок 3: Реєстрація</h3>
+                    <h3 class="section-title">Крок 3: Реєстрація гостей</h3>
                     <form id="bookingForm" onsubmit="processBooking(event)">
                         <div class="form-group">
-                            <label for="userName">Як вас гукать в лісі:</label>
-                            <input type="text" id="userName" required placeholder="Микола, кум Василя">
+                            <label for="userName">Як вас гукати в лісі (Ваше ім'я):</label>
+                            <input type="text" id="userName" required placeholder="Наприклад: Степан з Вижниці">
                         </div>
                         <div class="form-group">
-                            <label for="userPhone">Телефон (якщо знайдете зв'язок):</label>
+                            <label for="userPhone">Номер телефону (якщо там ловить мережа):</label>
                             <input type="tel" id="userPhone" required placeholder="+380...">
                         </div>
 
@@ -327,20 +476,29 @@
                             <div class="total-price" id="totalDisplay">0 грн</div>
                         </div>
 
-                        <button type="submit" class="btn-buy" style="margin-top: 15px;">Забити місце! 🎫</button>
+                        <button type="submit" class="btn-buy" style="margin-top: 20px;">Забити місце! 🎫</button>
                     </form>
+
+                    <div class="guarantee-badge">
+                        ✨ 100% БУКОВИНСЬКИЙ НАСТРІЙ ГАРАНТОВАНО! ✨
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Модалка -->
+    <!-- Модалка успішного замовлення -->
     <div class="modal-overlay" id="successModal">
         <div class="modal">
-            <h3>Ура! Назік чекає! 🎉</h3>
+            <h3>Ура! Назік уже пакує баян! 🎉</h3>
+            <p style="margin-top: 5px; color: #555;">Ваше місце на галявині успішно заброньовано.</p>
+            
             <div class="modal-ticket" id="ticketInvoice"></div>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">Скріншот квитка покажіть ліснику або ведмедю на вході.</p>
-            <button class="close-btn" onclick="closeModal()">Збирати речі</button>
+            
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
+                Зробіть скріншот цього пропуску та покажіть його ліснику, ведмедю або Назіку особисто на вході.
+            </p>
+            <button class="close-btn" onclick="closeModal()">Йду збирати речі</button>
         </div>
     </div>
 
@@ -371,21 +529,29 @@
             const total = document.getElementById('totalDisplay').innerText;
             const ticketNumber = 'NZK-' + Math.floor(100000 + Math.random() * 900000);
 
+            // Збір додаткових послуг
+            let addons = [];
+            document.querySelectorAll('.addon-check:checked').forEach(checkbox => {
+                addons.push(checkbox.parentElement.querySelector('span').innerText);
+            });
+            const addonsText = addons.length > 0 ? addons.join('<br>• ') : 'Без додаткових турбот';
+
             document.getElementById('ticketInvoice').innerHTML = `
-                <h4 style="text-align:center;color:#1b3a2b;border-bottom:1px dashed #ccc;padding-bottom:5px;">БУКОВИНСЬКИЙ ПРОПУСК</h4>
-                <p><strong>№:</strong> ${ticketNumber}</p>
-                <p><strong>Позивний:</strong> ${name}</p>
-                <p><strong>Рівень поваги:</strong> ${currentTicketName}</p>
-                <p><strong>Сплачено:</strong> ${total}</p>
+                <h4 style="text-align:center;color:#1b3a2b;border-bottom:2px dashed #1b3a2b;padding-bottom:8px;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">🎫 ОФІЦІЙНИЙ БУКОВИНСЬКИЙ ПРОПУСК</h4>
+                <p style="margin:5px 0;"><strong>Номер квитка:</strong> <span style="color:#e65100;">${ticketNumber}</span></p>
+                <p style="margin:5px 0;"><strong>Позивний гостя:</strong> ${name}</p>
+                <p style="margin:5px 0;"><strong>Обраний тариф:</strong> ${currentTicketName}</p>
+                <p style="margin:5px 0;"><strong>Додано благ:</strong><br>• ${addonsText}</p>
+                <div style="text-align:right; font-weight:bold; color:#2e7d32; font-size:1.2rem; margin-top:12px; border-top:1px solid #ddd; padding-top:8px;">Сплачено: ${total}</div>
             `;
             document.getElementById('successModal').style.display = 'flex';
         }
 
-        // Функція для закриття модального вікна
         function closeModal() {
             document.getElementById('successModal').style.display = 'none';
             document.getElementById('bookingForm').reset();
-            updateTotal();
+            // Скидаємо вибір на економ
+            selectTicket(document.querySelector('.ticket-option'), 'Економ-Полонина', 0);
         }
     </script>
 </body>
