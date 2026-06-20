@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAZIK-BOOKING.cv.ua — Квитки на Назіка</title>
+    <style>
+        :root {
+            --primary: #1b3a2b; /* Глибокий зелений (ліс) */
+            --accent: #f4c430;  /* Золотий/жовтий з афіші */
+            --accent-dark: #d4a316;
+            --bg: #fcfaf2;      /* Теплий кремовий */
+            --text: #222222;
+            --card-bg: #ffffff;
+            --border: #e0dacb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(27, 58, 43, 0.85), rgba(27, 58, 43, 0.95));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 4px dashed var(--accent);
+        }
+
+        .badge-nasa {
+            background-color: black;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid var(--accent);
+            letter-spacing: 3px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 2rem; }
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent);
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .program-list { list-style: none; }
+        .program-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0ede5;
+            display: flex;
+            align-items: center;
+        }
+        .program-list li::before {
+            content: "🪗";
+            margin-right: 15px;
+            font-size: 1.3rem;
+        }
+
+        .ticket-option {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticket-option.selected {
+            border-color: var(--primary);
+            background-color: #f0f7f3;
+        }
+
+        .ticket-option input[type="radio"] {
+            margin-right: 15px;
+            accent-color: var(--primary);
+        }
+
+        .ticket-details { flex-grow: 1; }
+        .ticket-title { font-weight: bold; font-size: 1.2rem; color: var(--primary); }
+        .ticket-desc { font-size: 0.9rem; color: #666; }
+        .ticket-price { font-weight: bold; font-size: 1.3rem; color: #2e7d32; }
+
+        .addon-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        .addon-option input { margin-right: 12px; accent-color: var(--primary); }
+        .addon-price { margin-left: auto; font-weight: 500; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+
+        .total-box {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .total-price { font-size: 2rem; font-weight: bold; color: var(--accent); margin: 10px 0; }
+
+        .btn-buy {
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Модалка успіху */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid var(--accent);
+        }
+        .modal-ticket {
+            background: #fffbe6;
+            border: 2px dashed var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .close-btn {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 6px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>NAZIK-BOOKING.cv.ua</h1>
+        <p>Офіційний квитковий оператор головної події Буковини</p>
+    </header>
+
+    <div class="hero">
+        <div class="badge-nasa">NASA</div>
+        <h2>НАЗІК НА БУКОВИНІ</h2>
+        <p>Субота, 19:00 • Секретна галявина в Карпатах</p>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <h3 class="section-title">У програмі вечора</h3>
+                    <ul class="program-list">
+                        <li><strong>Улюблені хіти:</strong> Співаємо всім селом до хрипоти.</li>
+                        <li><strong>Нові пісні:</strong> Презентація треків під впливом космосу та кепки NASA.</li>
+                        <li><strong>Танці до упаду:</strong> Організатори не несуть відповідальності за рельєф трави.</li>
+                        <li><strong>Гумор та настрій:</strong> 100% буковинський вайб.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Крок 1: Виберіть тариф</h3>
+                    
+                    <div class="ticket-option selected" onclick="selectTicket(this, 'Економ-Полонина', 0)">
+                        <input type="radio" name="ticket" id="t1" checked>
+                        <div class="ticket-details">
+                            <label for="t1" class="ticket-title">Економ-Полонина</label>
+                            <p class="ticket-desc">Вхід на галявину, екологічне повітря, постояти за смерекою.</p>
+                        </div>
+                        <div class="ticket-price">0 грн*</div>
+                    </div>
+
+                    <div class="ticket-option" onclick="selectTicket(this, 'Стандарт-Баян', 250)">
+                        <input type="radio" name="ticket" id="t2">
+                        <div class="ticket-details">
+                            <label for="t2" class="ticket-title">Стандарт-Баян</label>
+                            <p class="ticket-desc">Місце на дерев'яній лавці, дозвіл підспівувати.</p>
+                        </div>
+                        <div class="ticket-price">250 грн</div>
+                    </div>
+
+                    <div class="ticket-option" onclick="selectTicket(this, 'VIP NASA Premium', 9999)">
+                        <input type="radio" name="ticket" id="t3">
+                        <div class="ticket-details">
+                            <label for="t3" class="ticket-title">VIP NASA Premium</label>
+                            <p class="ticket-desc">Право потримати баян та приміряти кепку Назіка на 30 секунд.</p>
+                        </div>
+                        <div class="ticket-price">9999 грн</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Крок 2: Додаткові блага</h3>
+                    <label class="addon-option">
+                        <input type="checkbox" class="addon-check" data-price="50" onchange="updateTotal()">
+                        <span>Оренда антимоскітного спрею «Карпатський щит»</span>
+                        <span class="addon-price">+50 грн</span>
+                    </label>
+                    <label class="addon-option">
+                        <input type="checkbox" class="addon-check" data-price="150" onchange="updateTotal()">
+                        <span>Послуга особистого дзвінка: Назік крикне вам у трубку "Приходь, буде гучно!"</span>
+                        <span class="addon-price">+150 грн</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <div class="card" style="position: sticky; top: 20px;">
+                    <h3 class="section-title">Крок 3: Реєстрація</h3>
+                    <form id="bookingForm" onsubmit="processBooking(event)">
+                        <div class="form-group">
+                            <label for="userName">Як вас гукати в лісі:</label>
+                            <input type="text" id="userName" required placeholder="Микола, кум Василя">
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">Телефон (якщо знайдете зв'язок):</label>
+                            <input type="tel" id="userPhone" required placeholder="+380...">
+                        </div>
+
+                        <div class="total-box">
+                            <div>Загалом до сплати:</div>
+                            <div class="total-price" id="totalDisplay">0 грн</div>
+                        </div>
+
+                        <button type="submit" class="btn-buy" style="margin-top: 15px;">Забити місце! 🎫</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <h3>Ура! Назік чекає! 🎉</h3>
+            <div class="modal-ticket" id="ticketInvoice"></div>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">Скріншот квитка покажіть ліснику або ведмедю на вході.</p>
+            <button class="close-btn" onclick="closeModal()">Збирати речі</button>
+        </div>
+    </div>
+
+    <script>
+        let currentTicketName = 'Економ-Полонина';
+        let currentTicketPrice = 0;
+
+        function selectTicket(element, name, price) {
+            document.querySelectorAll('.ticket-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            element.querySelector('input[type="radio"]').checked = true;
+            currentTicketName = name;
+            currentTicketPrice = price;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = currentTicketPrice;
+            document.querySelectorAll('.addon-check:checked').forEach(cb => {
+                total += parseInt(cb.getAttribute('data-price'));
+            });
+            document.getElementById('totalDisplay').innerText = total + ' грн';
+        }
+
+        function processBooking(event) {
+            event.preventDefault();
+            const name = document.getElementById('userName').value;
+            const total = document.getElementById('totalDisplay').innerText;
+            const ticketNumber = 'NZK-' + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById('ticketInvoice').innerHTML = `
+                <h4 style="text-align:center;color:#1b3a2b;border-bottom:1px dashed #ccc;padding-bottom:5px;">БУКОВИНСЬКИЙ ПРОПУСК</h4>
+                <p><strong>№:</strong> ${ticketNumber}</p>
+                <p><strong>Позивний:</strong> ${name}</p>
+                <p><strong>Рівень поваги:</strong> ${currentTicketName}</p>
+                <p><strong>Сплачено:</strong> ${total}</p>
+            `;
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+            document.getElementById('bookingForm').reset();
+            updateTotal();
+        }
+    </script>
+</body>
+</html>
