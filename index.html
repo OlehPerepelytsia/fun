@@ -52,7 +52,7 @@
             background: linear-gradient(rgba(27, 58, 43, 0.85), rgba(27, 58, 43, 0.95));
             color: white;
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             border-bottom: 4px dashed var(--accent);
         }
 
@@ -71,7 +71,7 @@
         .hero h2 {
             font-size: 3rem;
             color: var(--accent);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
 
@@ -108,6 +108,20 @@
             padding: 25px;
             margin-bottom: 25px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Стилі для офіційної афіші */
+        .poster-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .poster-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 4px solid var(--accent);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
 
         .program-list { list-style: none; }
@@ -234,6 +248,11 @@
     <div class="container">
         <div class="grid">
             <div>
+                <!-- Блок з офіційною афішою події -->
+                <div class="poster-container">
+                    <img src="12590.jpg" alt="Офіційна афіша події Назік на Буковині" class="poster-image">
+                </div>
+
                 <div class="card">
                     <h3 class="section-title">У програмі вечора</h3>
                     <ul class="program-list">
@@ -295,7 +314,7 @@
                     <h3 class="section-title">Крок 3: Реєстрація</h3>
                     <form id="bookingForm" onsubmit="processBooking(event)">
                         <div class="form-group">
-                            <label for="userName">Як вас гукати в лісі:</label>
+                            <label for="userName">Як вас гукать в лісі:</label>
                             <input type="text" id="userName" required placeholder="Микола, кум Василя">
                         </div>
                         <div class="form-group">
@@ -315,6 +334,7 @@
         </div>
     </div>
 
+    <!-- Модалка -->
     <div class="modal-overlay" id="successModal">
         <div class="modal">
             <h3>Ура! Назік чекає! 🎉</h3>
@@ -361,6 +381,7 @@
             document.getElementById('successModal').style.display = 'flex';
         }
 
+        // Функція для закриття модального вікна
         function closeModal() {
             document.getElementById('successModal').style.display = 'none';
             document.getElementById('bookingForm').reset();
